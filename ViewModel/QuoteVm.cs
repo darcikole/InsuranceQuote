@@ -5,7 +5,7 @@ using System.Web;
 
 namespace InsuranceQuote.ViewModel
 {
-    public class QuoteVm
+    public class Quote
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

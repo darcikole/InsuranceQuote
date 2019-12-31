@@ -1,5 +1,8 @@
 ﻿using InsuranceQuote.Models;
+using InsuranceQuote.ViewModel;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace InsuranceQuote.Controllers
@@ -22,7 +25,7 @@ namespace InsuranceQuote.Controllers
             using (InsuranceQuoteEntities db = new InsuranceQuoteEntities())
             {
 
-                var newquote = new Quote
+                var newquote = new Models.Quote
                 {
                     FirstName = firstName,
                     LastName = lastName,
@@ -34,11 +37,10 @@ namespace InsuranceQuote.Controllers
                     DUI = dui,
                     Tickets = Convert.ToInt16(tickets),
                     FullCoverage = fullCoverage,
+                    FinalQuote = Convert.ToInt32(finalQuote)
                 };
 
-                db.Quotes.Add(newquote);
-                db.SaveChanges();
-
+                // Taking newquote input and calculating result
                 int basePrice = 50;
                 
                 int age = DateTime.Now.Year - dob.Year;
@@ -110,18 +112,30 @@ namespace InsuranceQuote.Controllers
                 int newTally = updateTotal + coverageQuote;
                 finalQuote = newTally;
 
-                var getquote = new Quote
-                { 
-                    FinalQuote = finalQuote  
+                var getquote = new Models.Quote
+                {
+                    FinalQuote = finalQuote
                 };
-
-                
-
-
+                db.Quotes.Add(newquote);
                 db.Quotes.Add(getquote);
                 db.SaveChanges();
+                var getquotes = db.Quotes.ToList();
+
+                var quoteView = new List<ViewModel.Quote>();
+                {
+                    foreach (var quote in getquotes)
+                    {
+                        var quoteTotal = new ViewModel.Quote
+                        {
+                            FinalQuote = Convert.ToInt32(finalQuote)
+                        };
+                        quoteView.Add(quoteTotal);
+                    }
+
+                }
+                return View(quoteView);
             }
-                return View("Quote");
+
         }
     }
 }

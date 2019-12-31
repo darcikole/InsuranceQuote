@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceQuote.Controllers
-{
+{ 
     public class AdminController : Controller
     {
         // GET: Admin
@@ -17,11 +17,12 @@ namespace InsuranceQuote.Controllers
             {
                 var getquotes = db.Quotes.ToList();
 
-                var quoteVms = new List<QuoteVm>();
+                var quoteVms = new List<ViewModel.Quote>();
                 foreach (var quote in getquotes)
                 {
-                    var quoteVm = new QuoteVm
+                    var quoteVm = new ViewModel.Quote
                     {
+                        Id = quote.Id,
                         FirstName = quote.FirstName,
                         LastName = quote.LastName,
                         Email = quote.Email,
@@ -29,8 +30,9 @@ namespace InsuranceQuote.Controllers
                     };
                     quoteVms.Add(quoteVm);
                 }
+                return View(quoteVms);
             }
-            return View();
+            
         }
     }
 }

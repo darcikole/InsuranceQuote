@@ -1,0 +1,19 @@
+﻿@using InsuranceQuote.ViewModel
+@model List<Quote>
+    
+
+
+<h2>Your Auto Insurance Quote</h2> 
+
+<table class="table">
+    <tbody>
+        @foreach(var quote in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem =>quote.FinalQuote)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
