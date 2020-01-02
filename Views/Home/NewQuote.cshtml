@@ -1,19 +1,13 @@
-﻿@using InsuranceQuote.ViewModel
-@model List<Quote>
+﻿@model decimal
     
 
-
-<h2>Your Auto Insurance Quote</h2> 
-
-<table class="table">
-    <tbody>
-        @foreach(var quote in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem =>quote.FinalQuote)
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="row no-gutters m-3">
+    <div class="card col-sm-12 col-md-10 col-lg-6 text-center mx-auto shadow">
+        <div class="card-header">
+            Your Monthly Quote
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">$@Model</h5>
+        </div>
+    </div>
+</div>

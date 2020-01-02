@@ -18,7 +18,7 @@ namespace InsuranceQuote.Controllers
         [HttpPost]
         public ActionResult NewQuote(string firstName, string lastName, string email, DateTime dob,
                                     int carYear, string carMake, string carModel,
-                                    bool dui, int tickets, bool fullCoverage, int finalQuote = 50)
+                                    bool dui, int tickets, bool fullCoverage, decimal finalQuote = 50)
         {
 
 
@@ -37,8 +37,10 @@ namespace InsuranceQuote.Controllers
                     DUI = dui,
                     Tickets = Convert.ToInt16(tickets),
                     FullCoverage = fullCoverage,
-                    FinalQuote = Convert.ToInt32(finalQuote)
+                    FinalQuote = Convert.ToDecimal(finalQuote)
                 };
+
+                
 
                 // Taking newquote input and calculating result
                 int basePrice = 50;
@@ -95,7 +97,7 @@ namespace InsuranceQuote.Controllers
                 int ticketsQuote;
                 if (tickets > 0)
                 {
-                    ticketsQuote = (tickets * (10 * 12));
+                    ticketsQuote = tickets * 10;
                 }
                 else
                 {
@@ -103,38 +105,23 @@ namespace InsuranceQuote.Controllers
                 }
                 int runningTotal = basePrice + ageQuote + carAgeQuote + porcheQuote + porcheX + ticketsQuote;
 
-                int duiQuote = dui == true ? Convert.ToInt32(runningTotal * 0.25) : 0;
+                float duiQuote = dui == true ? Convert.ToInt32(runningTotal * 0.25) : 0;
 
-                int updateTotal = runningTotal + duiQuote;
+                float updateTotal = runningTotal + duiQuote;
 
-                int coverageQuote = fullCoverage == true ? Convert.ToInt32(updateTotal * 0.50) : 0;
+                float coverageQuote = fullCoverage == true ? Convert.ToInt32(updateTotal * 0.50) : 0;
 
-                int newTally = updateTotal + coverageQuote;
+                decimal newTally = Convert.ToDecimal(updateTotal) + Convert.ToDecimal(coverageQuote);
+
                 finalQuote = newTally;
 
-                var getquote = new Models.Quote
-                {
-                    FinalQuote = finalQuote
-                };
                 db.Quotes.Add(newquote);
-                db.Quotes.Add(getquote);
                 db.SaveChanges();
-                var getquotes = db.Quotes.ToList();
 
-                var quoteView = new List<ViewModel.Quote>();
-                {
-                    foreach (var quote in getquotes)
-                    {
-                        var quoteTotal = new ViewModel.Quote
-                        {
-                            FinalQuote = Convert.ToInt32(finalQuote)
-                        };
-                        quoteView.Add(quoteTotal);
-                    }
-
-                }
-                return View(quoteView);
             }
+
+
+            return View(finalQuote);
 
         }
     }

@@ -5,17 +5,17 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="DOB" Type="DateTime" Precision="0" />
-    <Property Name="CarYear" Type="Int16" />
-    <Property Name="CarMake" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="CarModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CarYear" Type="Int16" Nullable="false" />
+    <Property Name="CarMake" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CarModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DUI" Type="Boolean" />
     <Property Name="Tickets" Type="Int16" />
-    <Property Name="FullCoverage" Type="Boolean" />
-    <Property Name="FinalQuote" Type="Int32" />
+    <Property Name="FullCoverage" Type="Boolean" Nullable="false" />
+    <Property Name="FinalQuote" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityContainer Name="InsuranceQuoteEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Quotes" EntityType="Self.Quote" />

@@ -18,13 +18,13 @@ namespace InsuranceQuote.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
-        public Nullable<short> CarYear { get; set; }
+        public System.DateTime DOB { get; set; }
+        public short CarYear { get; set; }
         public string CarMake { get; set; }
         public string CarModel { get; set; }
         public Nullable<bool> DUI { get; set; }
         public Nullable<short> Tickets { get; set; }
-        public Nullable<bool> FullCoverage { get; set; }
-        public Nullable<int> FinalQuote { get; set; }
+        public bool FullCoverage { get; set; }
+        public Nullable<decimal> FinalQuote { get; set; }
     }
 }
