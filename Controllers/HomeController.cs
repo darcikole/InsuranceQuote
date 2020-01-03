@@ -18,7 +18,7 @@ namespace InsuranceQuote.Controllers
         [HttpPost]
         public ActionResult NewQuote(string firstName, string lastName, string email, DateTime dob,
                                     int carYear, string carMake, string carModel,
-                                    bool dui, int tickets, bool fullCoverage, decimal finalQuote = 50)
+                                    bool dui, int tickets, bool fullCoverage, decimal? finalQuote)
         {
 
 
@@ -41,7 +41,6 @@ namespace InsuranceQuote.Controllers
                 };
 
                 
-
                 // Taking newquote input and calculating result
                 int basePrice = 50;
                 
@@ -72,6 +71,7 @@ namespace InsuranceQuote.Controllers
                     carAgeQuote = 0;
                 }
 
+
                 int porcheQuote;
                 
                 if (carMake == "Porche")
@@ -82,6 +82,7 @@ namespace InsuranceQuote.Controllers
                 {
                     porcheQuote = 0;
                 }
+
 
                 int porcheX;
                 if (carModel == "911 Carerra")
@@ -103,6 +104,8 @@ namespace InsuranceQuote.Controllers
                 {
                     ticketsQuote = 0;
                 }
+
+
                 int runningTotal = basePrice + ageQuote + carAgeQuote + porcheQuote + porcheX + ticketsQuote;
 
                 float duiQuote = dui == true ? Convert.ToInt32(runningTotal * 0.25) : 0;
@@ -115,10 +118,10 @@ namespace InsuranceQuote.Controllers
 
                 finalQuote = newTally;
 
+
                 db.Quotes.Add(newquote);
                 db.SaveChanges();
-
-            }
+            } 
 
 
             return View(finalQuote);

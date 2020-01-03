@@ -26,7 +26,7 @@ namespace InsuranceQuote.Controllers
                         FirstName = quote.FirstName,
                         LastName = quote.LastName,
                         Email = quote.Email,
-                        FinalQuote = Convert.ToInt32(quote.FinalQuote)
+                        FinalQuote = Convert.ToDecimal(quote.FinalQuote)
                     };
                     quoteVms.Add(quoteVm);
                 }
