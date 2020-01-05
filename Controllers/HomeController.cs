@@ -18,7 +18,7 @@ namespace InsuranceQuote.Controllers
         [HttpPost]
         public ActionResult NewQuote(string firstName, string lastName, string email, DateTime dob,
                                     int carYear, string carMake, string carModel,
-                                    bool dui, int tickets, bool fullCoverage, decimal? finalQuote)
+                                    bool dui, int? tickets, bool fullCoverage, decimal? finalQuote)
         {
 
 
@@ -98,7 +98,7 @@ namespace InsuranceQuote.Controllers
                 int ticketsQuote;
                 if (tickets > 0)
                 {
-                    ticketsQuote = tickets * 10;
+                    ticketsQuote = Convert.ToInt32(tickets) * 10;
                 }
                 else
                 {
@@ -118,12 +118,11 @@ namespace InsuranceQuote.Controllers
 
                 finalQuote = newTally;
 
-
                 db.Quotes.Add(newquote);
                 db.SaveChanges();
             } 
 
-
+           
             return View(finalQuote);
 
         }
