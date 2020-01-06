@@ -20,7 +20,85 @@ namespace InsuranceQuote.Controllers
                                     int carYear, string carMake, string carModel,
                                     bool dui, int? tickets, bool fullCoverage, decimal? finalQuote)
         {
+            // Calculating Quote
+            int basePrice = 50;
 
+            int age = DateTime.Now.Year - dob.Year;
+
+            int ageQuote;
+            if (age < 18)
+            {
+                ageQuote = 100;
+            }
+            else if (age > 18 && age < 25 || age > 100)
+            {
+                ageQuote = 25;
+            }
+            else
+            {
+                ageQuote = 0;
+            }
+
+
+            int carAgeQuote;
+            if (carYear < 2000 || carYear > 2015)
+            {
+                carAgeQuote = 25;
+            }
+            else
+            {
+                carAgeQuote = 0;
+            }
+
+
+            int porcheQuote;
+
+            if (carMake == "Porche")
+            {
+                porcheQuote = 25;
+            }
+            else
+            {
+                porcheQuote = 0;
+            }
+
+
+            int porcheX;
+            if (carModel == "911 Carerra")
+            {
+                porcheX = 25;
+            }
+            else
+            {
+                porcheX = 0;
+            }
+
+
+            int ticketsQuote;
+            if (tickets > 0)
+            {
+                ticketsQuote = Convert.ToInt32(tickets) * 10;
+            }
+            else
+            {
+                ticketsQuote = 0;
+            }
+
+
+            int runningTotal = basePrice + ageQuote + carAgeQuote + porcheQuote + porcheX + ticketsQuote;
+
+            float duiQuote = dui == true ? Convert.ToInt32(runningTotal * 0.25) : 0;
+
+            float updateTotal = runningTotal + duiQuote;
+
+            float coverageQuote = fullCoverage == true ? Convert.ToInt32(updateTotal * 0.50) : 0;
+
+            decimal newTally = Convert.ToDecimal(updateTotal) + Convert.ToDecimal(coverageQuote);
+
+            finalQuote = newTally;
+
+            
+            // Creating object
 
             using (InsuranceQuoteEntities db = new InsuranceQuoteEntities())
             {
@@ -40,88 +118,10 @@ namespace InsuranceQuote.Controllers
                     FinalQuote = Convert.ToDecimal(finalQuote)
                 };
 
-                
-                // Taking newquote input and calculating result
-                int basePrice = 50;
-                
-                int age = DateTime.Now.Year - dob.Year;
-
-                int ageQuote;
-                if (age < 18)
-                {
-                    ageQuote = 100;
-                }
-                else if (age > 18 && age < 25 || age > 100)
-                {
-                    ageQuote = 25;
-                }
-                else
-                {
-                    ageQuote = 0;
-                }
-
-
-                int carAgeQuote;
-                if (carYear < 2000 || carYear > 2015)
-                {
-                    carAgeQuote = 25;
-                }
-                else
-                {
-                    carAgeQuote = 0;
-                }
-
-
-                int porcheQuote;
-                
-                if (carMake == "Porche")
-                {
-                    porcheQuote = 25;
-                }
-                else
-                {
-                    porcheQuote = 0;
-                }
-
-
-                int porcheX;
-                if (carModel == "911 Carerra")
-                {
-                    porcheX= 25;
-                }
-                else
-                {
-                    porcheX = 0;
-                }
-
-
-                int ticketsQuote;
-                if (tickets > 0)
-                {
-                    ticketsQuote = Convert.ToInt32(tickets) * 10;
-                }
-                else
-                {
-                    ticketsQuote = 0;
-                }
-
-
-                int runningTotal = basePrice + ageQuote + carAgeQuote + porcheQuote + porcheX + ticketsQuote;
-
-                float duiQuote = dui == true ? Convert.ToInt32(runningTotal * 0.25) : 0;
-
-                float updateTotal = runningTotal + duiQuote;
-
-                float coverageQuote = fullCoverage == true ? Convert.ToInt32(updateTotal * 0.50) : 0;
-
-                decimal newTally = Convert.ToDecimal(updateTotal) + Convert.ToDecimal(coverageQuote);
-
-                finalQuote = newTally;
-
                 db.Quotes.Add(newquote);
+
                 db.SaveChanges();
             } 
-
            
             return View(finalQuote);
 
